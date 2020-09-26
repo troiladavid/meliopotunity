@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="filter_sorted_by">
+        <item>@string/order_by</item>
+        <item>@string/relevance</item>
+        <item>@string/higher_price</item>
+        <item>@string/lower_price</item>
+    </string-array>
+
+    <string-array name="sort_array">
+        <item>@string/price_desc</item>
+        <item>@string/price_asc</item>
+    </string-array>
+</resources>

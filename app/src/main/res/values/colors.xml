@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFE250</color>
+    <color name="colorPrimaryDark">#FFE250</color>
+    <color name="colorAccent">#FFE250</color>
+    <color name="middleColor">#FFF1A8</color>
+    <color name="shuttle_gray">#606162</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="green_delivery">#70bd1b</color>
+    <color name="search_text_color">#333333</color>
+    <color name="gallery_grey">#EEEEEE</color>
+    <color name="dusty_grey">#9b9b9b</color>
+    <color name="blue">#006CC7</color>
+    <color name="black">#000000</color>
+</resources>

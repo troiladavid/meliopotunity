@@ -1,0 +1,62 @@
+<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@drawable/gradient"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gradient_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/progressBar"
+            layout="@layout/progress_bar_layout"
+            android:layout_width="@dimen/no_dimen"
+            android:layout_height="@dimen/no_dimen"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="@dimen/dimen_160"
+            android:layout_height="@dimen/dimen_160"
+            android:layout_marginTop="@dimen/dimen_60"
+            android:src="@drawable/logo_ml"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo_ml" />
+
+        <android.widget.SearchView
+            android:id="@+id/searchField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@drawable/search_bar_shape"
+            android:queryBackground="@android:color/transparent"
+            android:iconifiedByDefault="false"
+            android:queryHint="@string/search_hint"
+            app:layout_constraintTop_toBottomOf="@+id/logoImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:text="@string/search_button_text"
+            style="@style/searchButtonStyle"
+            app:layout_constraintEnd_toEndOf="@+id/searchField"
+            app:layout_constraintStart_toStartOf="@+id/searchField"
+            app:layout_constraintTop_toBottomOf="@+id/searchField" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
