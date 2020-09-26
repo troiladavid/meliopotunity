@@ -6,6 +6,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import com.davidtroila.melioportunity.model.ErrorTypes
 
+/**
+ * Created by David Troila
+ */
 fun Context.createDialog (errorTypes: ErrorTypes, positiveAction: () -> Unit){
     val message = getErrorMessage(errorTypes)
     val builder = AlertDialog.Builder(this)

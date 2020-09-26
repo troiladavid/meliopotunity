@@ -1,7 +1,7 @@
 package com.davidtroila.melioportunity
 
 /**
- * Used as a wrapper for data that is exposed via a LiveData that represents an event.
+ * Created by David Troila
  */
 open class EventWrapper<out T>(private val content: T) {
 

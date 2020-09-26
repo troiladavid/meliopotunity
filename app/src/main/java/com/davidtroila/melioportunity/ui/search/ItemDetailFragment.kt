@@ -12,14 +12,11 @@ import com.davidtroila.melioportunity.R
 import com.davidtroila.melioportunity.model.Item
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item_detail.*
+import timber.log.Timber
 
-
-private const val ARG_PARAM1 = "item"
 
 /**
- * A simple [Fragment] subclass.
- * Use the [ItemDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Created by David Troila
  */
 class ItemDetailFragment : Fragment() {
 
@@ -29,7 +26,7 @@ class ItemDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         (requireActivity() as AppCompatActivity).supportActionBar?.show()
         arguments?.let {
-            item = it.getParcelable(ARG_PARAM1)
+            item = it.getParcelable(ITEM_ARG)
         }
     }
 
@@ -39,17 +36,23 @@ class ItemDetailFragment : Fragment() {
     ): View? = inflater.inflate(R.layout.fragment_item_detail, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Picasso.with(requireContext()).load(item?.imageURL).into(itemImageView)
+        Timber.d("Screen loaded")
         item?.let {item ->
+            Picasso.with(requireContext()).load(item.imageURL).into(itemImageView)
             titleTextView.text = item.title
             priceTextView.text = getString(R.string.item_price, item.price)
             sellerTextView.text = item.city
             buyTextView.setOnClickListener {
+                Timber.d("Navigating to ML web")
                 val url: String = item.permalink
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
                 startActivity(i)
             }
         }
+    }
+
+    companion object{
+        const val ITEM_ARG = "item"
     }
 }

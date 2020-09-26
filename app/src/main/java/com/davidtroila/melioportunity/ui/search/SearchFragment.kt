@@ -1,15 +1,11 @@
 package com.davidtroila.melioportunity.ui.search
 
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -22,20 +18,11 @@ import com.davidtroila.melioportunity.model.ResultResponse
 import com.davidtroila.melioportunity.service.VolleyService
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.progressBar
-import kotlinx.android.synthetic.main.fragment_search_result.*
-import kotlinx.android.synthetic.main.search_edit_text.*
-import kotlinx.android.synthetic.main.search_edit_text.searchView
 import timber.log.Timber
 
 class SearchFragment : Fragment() {
 
     private lateinit var searchViewModel: SearchViewModel
-    private lateinit var volleyService: VolleyService
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        volleyService = VolleyService(requireContext())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,22 +32,19 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("Screen loaded")
+
+        //Setup ViewModel
+        val volleyService = VolleyService(requireContext())
         val viewModelFactory = SearchViewModelFactory(volleyService)
         searchViewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
-        searchViewModel.itemList.observe(viewLifecycleOwner, { it.getContentIfNotHandled()?.let { response ->
-            navigateToResults(response)
-        } })
-        searchViewModel.onFailure.observe(viewLifecycleOwner, {
-            progressBar.visibility = View.GONE
-            requireContext().createDialog(it) {
-                searchButton.isVisible = true
-                searchField.isVisible = true
-            }
-        })
 
+        registerObservers()
         registerListeners()
     }
 
+    /***
+     * Sets up all listeners for this view
+     */
     private fun registerListeners() {
         searchButton.setOnClickListener { performSearch() }
 
@@ -75,6 +59,22 @@ class SearchFragment : Fragment() {
         Timber.d("Listeners registered")
     }
 
+    /***
+     * Sets up observers over viewModel LiveData
+     */
+    private fun registerObservers(){
+        searchViewModel.itemList.observe(viewLifecycleOwner, { it.getContentIfNotHandled()?.let { response ->
+            navigateToResults(response)
+        } })
+        searchViewModel.onFailure.observe(viewLifecycleOwner, {
+            progressBar.visibility = View.GONE
+            requireContext().createDialog(it) {
+                searchButton.isVisible = true
+                searchField.isVisible = true
+            }
+        })
+    }
+
     private fun navigateToResults(result: ResultResponse){
         Timber.d("Navigating to Results")
         view?.let { Navigation.findNavController(it).navigate(
@@ -83,6 +83,9 @@ class SearchFragment : Fragment() {
         ) }
     }
 
+    /***
+     * Starts search if query is not blank
+     */
     private fun performSearch() {
         Timber.d("Starting search")
         if (searchField.query.isNullOrEmpty()){

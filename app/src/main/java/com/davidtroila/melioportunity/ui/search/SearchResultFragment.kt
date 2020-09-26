@@ -50,6 +50,7 @@ class SearchResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("Screen loaded")
+
         //Setup viewModel
         val viewModelFactory = SearchViewModelFactory(volleyService)
         searchResultViewModel = ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
@@ -68,6 +69,14 @@ class SearchResultFragment : Fragment() {
         registerObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+    }
+
+    /***
+     * Add options to sort spinner
+     */
     private fun populateSortSpinner(){
         val sortOptions = resources.getStringArray(R.array.filter_sorted_by)
         sortSpinner.adapter = ArrayAdapter(
@@ -77,11 +86,9 @@ class SearchResultFragment : Fragment() {
         )
     }
 
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-    }
-
+    /***
+     * Sets up all listeners for this view
+     */
     @SuppressLint("ClickableViewAccessibility")
     private fun registerListeners() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -98,12 +105,10 @@ class SearchResultFragment : Fragment() {
             }
         })
 
-        val listener = View.OnTouchListener { _, _ ->
+        sortSpinner.setOnTouchListener { _, _ ->
             userSelect = true
             false
         }
-
-        sortSpinner.setOnTouchListener(listener)
 
         sortSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
 
@@ -158,6 +163,10 @@ class SearchResultFragment : Fragment() {
         Timber.d("Listeners registered")
     }
 
+
+    /***
+     * Sets up observers over viewModel LiveData
+     */
     private fun registerObservers(){
         searchResultViewModel.itemList.observe(viewLifecycleOwner, {
             loadSearchResults(it.peekContent())
@@ -169,6 +178,9 @@ class SearchResultFragment : Fragment() {
         Timber.d("Observers registered")
     }
 
+    /***
+     * Loads search results on screen with the call response
+     */
     private fun loadSearchResults(response: ResultResponse){
         progressBar.isVisible = false
         if (response.result.isEmpty()){

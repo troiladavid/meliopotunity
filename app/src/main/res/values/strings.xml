@@ -22,5 +22,7 @@
     <string name="higher_price">Mayor Precio</string>
     <string name="price_asc">price_asc</string>
     <string name="price_desc">price_desc</string>
+    <string name="no_results">Ups! No hubo resultados para tu busqueda</string>
+    <string name="buy_link">¡Comprar!</string>
 
 </resources>

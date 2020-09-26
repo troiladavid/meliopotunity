@@ -23,6 +23,9 @@ class SearchViewModel (private val volleyService: VolleyService): ViewModel(){
     val onFailure: LiveData<ErrorTypes>
         get() = _onFailure
 
+    /***
+     * Makes a get call to get an item list
+     */
     fun getArticles(query: String, offset: Int?= 0, sort: String? = null){
         uiScope.launch {
             withContext(Dispatchers.Main){

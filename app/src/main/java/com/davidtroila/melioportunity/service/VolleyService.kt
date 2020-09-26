@@ -2,7 +2,6 @@ package com.davidtroila.melioportunity.service
 
 import android.content.Context
 import android.net.Uri.Builder
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.*
 import com.android.volley.toolbox.StringRequest
@@ -15,7 +14,9 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
-
+/**
+ * Created by David Troila
+ */
 class VolleyService(private val context: Context): VolleyInterface{
     private lateinit var requestQueue: RequestQueue
 
@@ -79,8 +80,7 @@ class VolleyService(private val context: Context): VolleyInterface{
             permalink = c.getString("permalink"),
             city = (c.getJSONObject("address").getString("city_name")),
             price = c.getInt("price").toString(),
-            shipping = c.getJSONObject("shipping").getString("free_shipping"),
-            //brand = c.getJSONArray("attributes").getJSONObject(0).getString("value_name")
+            shipping = c.getJSONObject("shipping").getString("free_shipping")
         )
     }
 

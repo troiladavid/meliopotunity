@@ -15,24 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.davidtroila.melioportunity.R
 import com.squareup.picasso.Picasso
 
-
+/**
+ * Created by David Troila
+ */
 class ItemAdapter(
     private val layoutManager: GridLayoutManager? = null,
-    private val context: Context
-): ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallback()) {
+    private val context: Context): ListAdapter<Item, ItemAdapter.ViewHolder>(ItemDiffCallback()) {
 
-    var mItems = mutableListOf<Item>()
-
-    fun addMoreContacts(newContacts: List<Item>) {
-        mItems.addAll(mItems.size , newContacts)
-        submitList(mItems)
-    }
-
-    fun submitResult(result: List<Item>){
-        submitList(result)
-    }
-
-override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         Picasso.with(context).load(item.imageURL).into(holder.itemImage)
         holder.itemTitle.text = item.title
@@ -63,6 +53,7 @@ override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     }
 
     class ItemDiffCallback : DiffUtil.ItemCallback<Item>() {
+
         override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem.id == newItem.id
         }

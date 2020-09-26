@@ -107,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="Ups! No hubo resultados para tu busqueda"
+        android:text="@string/no_results"
         app:layout_constraintEnd_toEndOf="@+id/shrugImageView"
         app:layout_constraintStart_toStartOf="@id/shrugImageView"
         app:layout_constraintTop_toBottomOf="@+id/shrugImageView" />
