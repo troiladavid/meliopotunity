@@ -4,8 +4,7 @@ import android.content.Context
 import android.net.Uri.Builder
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.*
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.android.volley.toolbox.*
 import com.davidtroila.melioportunity.EventWrapper
 import com.davidtroila.melioportunity.model.ErrorTypes
 import com.davidtroila.melioportunity.model.Item
@@ -27,19 +26,10 @@ class VolleyService(private val context: Context): VolleyInterface{
         onSuccess: MutableLiveData<EventWrapper<ResultResponse>>,
         onFailure: MutableLiveData<ErrorTypes>?
     ){
-        val builder = Builder()
-        builder.scheme("https")
-            .authority("api.mercadolibre.com")
-            .appendPath("sites")
-            .appendPath("MLA")
-            .appendPath("search")
-            .appendQueryParameter("q", query)
-            .appendQueryParameter("offset", offset.toString())
-            .appendQueryParameter("limit", "20")
-        sort?.let { builder.appendQueryParameter("sort",sort) }
-        val url: String = builder.build().toString()
+        val url = buildURL(query, offset, sort)
 
-        requestQueue = Volley.newRequestQueue(context)
+        requestQueue = VolleySingleton.getInstance(context).requestQueue
+
         requestQueue.cancelAll("TAG")
         val itemList = mutableListOf<Item>()
         val stringRequest = StringRequest(url,
@@ -66,8 +56,22 @@ class VolleyService(private val context: Context): VolleyInterface{
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
 
-        requestQueue.add(stringRequest)
+        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest)
         Timber.d("Search URL: $url")
+    }
+
+    private fun buildURL(query: String, offset: Int?, sort: String?): String{
+        val builder = Builder()
+        builder.scheme("https")
+            .authority("api.mercadolibre.com")
+            .appendPath("sites")
+            .appendPath("MLA")
+            .appendPath("search")
+            .appendQueryParameter("q", query)
+            .appendQueryParameter("offset", offset.toString())
+            .appendQueryParameter("limit", "20")
+        sort?.let { builder.appendQueryParameter("sort",sort) }
+        return builder.build().toString()
     }
 
     private fun parseItems(c: JSONObject): Item{
