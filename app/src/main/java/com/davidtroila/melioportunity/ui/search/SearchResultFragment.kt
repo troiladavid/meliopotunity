@@ -157,7 +157,7 @@ class SearchResultFragment : Fragment() {
             query?.let {
                 searchResultViewModel.getArticles(it, offset = offset)}
         }
-        
+
         Timber.d("Listeners registered")
     }
 

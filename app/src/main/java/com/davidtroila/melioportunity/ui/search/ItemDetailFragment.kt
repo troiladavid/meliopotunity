@@ -46,9 +46,11 @@ class ItemDetailFragment : Fragment() {
             titleTextView.text = item.title
             priceTextView.text = getString(R.string.item_price, item.price)
             sellerTextView.text = item.city
+            shippingTextView.text = if (item.shipping.toBoolean()) getString(R.string.free_shipping) else getString(R.string.no_shipping)
+            paymentTextView.text = if (item.acceptMercadoPago.toBoolean()) getString(R.string.pay_with_MP) else getString(R.string.check_payment_method)
             buyTextView.setOnClickListener {
                 Timber.d("Navigating to ML web")
-                val url: String = item.permalink
+                val url: String? = item.permalink
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(url)
                 startActivity(i)

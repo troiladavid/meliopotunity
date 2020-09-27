@@ -19,6 +19,11 @@
     <string name="price_desc">price_desc</string>
     <string name="no_results">Ups! No hubo resultados para tu busqueda</string>
     <string name="buy_link">¡Comprar!</string>
+    <string name="free_shipping">¡Envío gratis!</string>
+    <string name="no_shipping">Sin envio gratis</string>
+    <string name="pay_with_MP">Pagá con mercadopago</string>
+    <string name="check_payment_method">Chequeá las formas de pago</string>
+
 
 
 
