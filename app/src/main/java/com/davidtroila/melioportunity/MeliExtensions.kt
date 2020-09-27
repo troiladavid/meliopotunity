@@ -26,7 +26,7 @@ fun getErrorMessage(errorTypes: ErrorTypes): String {
         ErrorTypes.NETWORK -> "Hubo un error.\nRevisá tu conexión a internet e intentá de nuevo"
         ErrorTypes.SERVER -> "No pudimos completar la busqueda.\nIntentá mas tarde"
         ErrorTypes.TIMEOUT -> "La busqueda tomó mas de lo esperado y la cancelamos"
-        else -> "Ocurrió un error inesperado"
+        else -> "Ocurrió un error inesperado y no podemos mostrar el resultado"
     }
 }
 

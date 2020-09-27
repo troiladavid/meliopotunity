@@ -8,8 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.davidtroila.melioportunity.R
+import com.davidtroila.melioportunity.createDialog
+import com.davidtroila.melioportunity.model.ErrorTypes
 import com.davidtroila.melioportunity.model.Item
 import com.davidtroila.melioportunity.ui.main.MainActivity
 import com.squareup.picasso.Picasso
@@ -26,8 +29,11 @@ class ItemDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (requireActivity() as AppCompatActivity).supportActionBar?.show()
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (requireActivity() as AppCompatActivity).supportActionBar?.let {
+            it.show()
+            it.setDisplayHomeAsUpEnabled(true)
+            it.title = getString(R.string.item_detail)
+        }
         setHasOptionsMenu(true)
         arguments?.let {
             item = it.getParcelable(ITEM_ARG)
@@ -41,27 +47,32 @@ class ItemDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Timber.d("Screen loaded")
-        item?.let { item ->
-            Picasso.with(requireContext()).load(item.imageURL).into(itemImageView)
-            titleTextView.text = item.title
-            priceTextView.text = getString(R.string.item_price, item.price)
-            sellerTextView.text = item.city
-            shippingTextView.text = if (item.shipping.toBoolean()) getString(R.string.free_shipping) else getString(R.string.no_shipping)
-            paymentTextView.text = if (item.acceptMercadoPago.toBoolean()) getString(R.string.pay_with_MP) else getString(R.string.check_payment_method)
-            buyTextView.setOnClickListener {
-                Timber.d("Navigating to ML web")
-                val url: String? = item.permalink
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                startActivity(i)
+        if (item != null) {
+            item?.let { item ->
+                itemContainer.isVisible = true
+                Picasso.with(requireContext()).load(item.imageURL).into(itemImageView)
+                titleTextView.text = item.title
+                priceTextView.text = getString(R.string.item_price, item.price)
+                sellerTextView.text = item.city
+                shippingTextView.text = if (item.shipping.toBoolean()) getString(R.string.free_shipping) else getString(R.string.no_shipping)
+                paymentTextView.text = if (item.acceptMercadoPago.toBoolean()) getString(R.string.pay_with_MP) else getString(R.string.check_payment_method)
+                buyTextView.setOnClickListener {
+                    Timber.d("Navigating to ML web")
+                    val url: String? = item.permalink
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    startActivity(i)
+                }
             }
+        } else {
+            requireContext().createDialog(ErrorTypes.DEFAULT) {(activity as MainActivity?)?.onBackPressed()}
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                (activity as MainActivity?)!!.onBackPressed()
+                (activity as MainActivity?)?.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

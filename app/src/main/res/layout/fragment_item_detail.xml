@@ -11,6 +11,7 @@
         android:id="@+id/itemContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         tools:context=".ui.search.ItemDetailFragment">
 
         <TextView
@@ -93,7 +94,7 @@
 
         <TextView
             android:id="@+id/shippingTextView"
-            android:text="¡Envío Gratis!"
+            android:text="@string/free_shipping"
             android:textAlignment="center"
             android:textColor="@color/green_delivery"
             android:layout_width="wrap_content"
@@ -110,7 +111,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="@color/blue"
-            android:text="Paga con mercadopago"
+            android:text="@string/pay_with_MP"
             android:layout_marginTop="@dimen/dimen_8"
             app:layout_constraintTop_toBottomOf="@+id/shippingTextView"
             app:layout_constraintEnd_toEndOf="@id/shippingTextView"/>
