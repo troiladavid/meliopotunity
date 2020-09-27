@@ -10,7 +10,7 @@
     <style name="searchButtonStyle">
         <item name="android:textSize">@dimen/search_text_size</item>
         <item name="android:background">@color/gallery_grey</item>
-        <item name="android:textColor">@color/shuttle_gray</item>
+        <item name="android:textColor">@color/blue</item>
     </style>
 
 </resources>

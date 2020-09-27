@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">Buscador de productos</string>
 
-    //SEARCH FRAGMENT
     <string name="search_edit_text_hint">Buscá lo que vos quieras</string>
     <string name="search_button_text">BUSCAR</string>
-
-    //ITEM VIEW HOLDER
     <string name="item_price">$ %s</string>
     <string name="item_condition_new">Nuevo</string>
     <string name="item_condition_used">Usado</string>
@@ -14,8 +11,6 @@
     <string name="item_preview">Item preview</string>
     <string name="seller_location">Ubicación del vendedor</string>
     <string name="search_results">Resultados:</string>
-
-    //SORT
     <string name="order_by">Ordenar por</string>
     <string name="relevance">Relevancia</string>
     <string name="lower_price">Menor Precio</string>
@@ -24,5 +19,9 @@
     <string name="price_desc">price_desc</string>
     <string name="no_results">Ups! No hubo resultados para tu busqueda</string>
     <string name="buy_link">¡Comprar!</string>
+
+
+
+
 
 </resources>

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.davidtroila.melioportunity.R
+import com.davidtroila.melioportunity.changeItemsView
 import com.davidtroila.melioportunity.createDialog
 import com.davidtroila.melioportunity.model.ItemAdapter
 import com.davidtroila.melioportunity.model.ResultResponse
@@ -74,7 +75,7 @@ class SearchResultFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
     }
 
-    /***
+    /**
      * Add options to sort spinner
      */
     private fun populateSortSpinner(){
@@ -86,7 +87,7 @@ class SearchResultFragment : Fragment() {
         )
     }
 
-    /***
+    /**
      * Sets up all listeners for this view
      */
     @SuppressLint("ClickableViewAccessibility")
@@ -132,18 +133,14 @@ class SearchResultFragment : Fragment() {
             }
         }
 
-        gridButton.setOnClickListener{
-            gridButton.isEnabled = false
+        gridButton.setOnClickListener{ it.changeItemsView(listButton){
             manager.spanCount = 2
-            adapter.notifyItemRangeChanged(0, adapter.itemCount)
-            listButton.isEnabled = true
+            adapter.notifyItemRangeChanged(0, adapter.itemCount) }
         }
 
-        listButton.setOnClickListener{
-            listButton.isEnabled = false
+        listButton.setOnClickListener{ it.changeItemsView(gridButton) {
             manager.spanCount = 1
-            adapter.notifyItemRangeChanged(0, adapter.itemCount)
-            gridButton.isEnabled = true
+            adapter.notifyItemRangeChanged(0, adapter.itemCount) }
         }
 
         moreButton.setOnClickListener {
@@ -160,6 +157,7 @@ class SearchResultFragment : Fragment() {
             query?.let {
                 searchResultViewModel.getArticles(it, offset = offset)}
         }
+        
         Timber.d("Listeners registered")
     }
 
