@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.davidtroila.melioportunity.R
 import com.davidtroila.melioportunity.changeItemsView
 import com.davidtroila.melioportunity.createDialog
+import com.davidtroila.melioportunity.hideKeyboard
 import com.davidtroila.melioportunity.model.ItemAdapter
 import com.davidtroila.melioportunity.model.ResultResponse
 import com.davidtroila.melioportunity.service.VolleyService
@@ -146,6 +147,7 @@ class SearchResultFragment : Fragment() {
         moreButton.setOnClickListener {
             progressBar.isVisible = true
             offset += 20
+            view?.hideKeyboard()
             progressBar.visibility = View.VISIBLE
             query?.let {
                 searchResultViewModel.getArticles(it, offset = offset)}
@@ -154,6 +156,7 @@ class SearchResultFragment : Fragment() {
         backButton.setOnClickListener {
             progressBar.isVisible = true
             offset -= 20
+            view?.hideKeyboard()
             query?.let {
                 searchResultViewModel.getArticles(it, offset = offset)}
         }

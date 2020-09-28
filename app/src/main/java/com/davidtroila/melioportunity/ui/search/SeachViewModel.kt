@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import com.davidtroila.melioportunity.EventWrapper
 import com.davidtroila.melioportunity.model.ErrorTypes
 import com.davidtroila.melioportunity.model.ResultResponse
-import com.davidtroila.melioportunity.service.VolleyService
+import com.davidtroila.melioportunity.service.VolleyInterface
 import kotlinx.coroutines.*
 
-class SearchViewModel (private val volleyService: VolleyService): ViewModel(){
+class SearchViewModel (private val volleyService: VolleyInterface): ViewModel(){
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
